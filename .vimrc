@@ -1,6 +1,3 @@
-" Enable completion where available.
-" This setting must be set before ALE is loaded.
-"
 call plug#begin()
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'itchyny/lightline.vim'
@@ -15,6 +12,7 @@ Plug 'psf/black', { 'branch': 'stable' }
 Plug 'preservim/nerdcommenter'
 Plug 'preservim/nerdtree'
 Plug 'jiangmiao/auto-pairs'
+Plug 'matze/vim-move'
 " Plug 'dense-analysis/ale'
 call plug#end()
 
@@ -113,7 +111,6 @@ set tm=500
 
 " Add a bit extra margin to the left
 set foldcolumn=1
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -435,6 +432,11 @@ inoremap <silent><expr> <Tab>
       \ coc#refresh()
 
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Vim Move
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:move_key_modifier = 'S'    
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Ale (syntax checker and linter)
