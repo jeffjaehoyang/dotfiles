@@ -2,22 +2,18 @@ call plug#begin()
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'itchyny/lightline.vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 Plug 'gruvbox-community/gruvbox'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'psf/black', { 'branch': 'stable' }
-Plug 'preservim/nerdcommenter'
+Plug 'tpope/vim-commentary',
 Plug 'preservim/nerdtree'
 Plug 'jiangmiao/auto-pairs'
 Plug 'matze/vim-move'
-Plug 'voldikss/vim-floaterm'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
-" Plug 'dense-analysis/ale'
 call plug#end()
 
 syntax on
@@ -431,10 +427,10 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 " => NerdComment
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
+" let g:NERDSpaceDelims = 1
 
-nnoremap ,c :call NERDComment(0,"toggle")<CR>
-vnoremap ,c :call NERDComment(0,"toggle")<CR>
+" nnoremap ,c :call NERDComment(0,"toggle")<CR>
+" vnoremap ,c :call NERDComment(0,"toggle")<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => COC
