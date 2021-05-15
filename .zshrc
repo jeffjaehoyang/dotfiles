@@ -97,6 +97,7 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
 alias ipython="iPython"
+alias subletsnu="cd /Users/jeffyang/Developer/sublets-nu-new"
 alias myworkspace="cd /Users/jeffyang/Developer"
 alias thisquarter="cd /Users/jeffyang/Dropbox/Northwestern\ University/Academics/4\ Senior/1\ 2021\ Spring"
 alias ml="cd /Users/jeffyang/Dropbox/Northwestern\ University/Academics/4\ Senior/1\ 2021\ Spring/CS\ 349"

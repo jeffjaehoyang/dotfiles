@@ -4,7 +4,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'morhetz/gruvbox'
+Plug 'gruvbox-community/gruvbox'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -13,14 +13,22 @@ Plug 'preservim/nerdcommenter'
 Plug 'preservim/nerdtree'
 Plug 'jiangmiao/auto-pairs'
 Plug 'matze/vim-move'
+Plug 'voldikss/vim-floaterm'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'tpope/vim-fugitive'
+Plug 'Yggdroot/indentLine'
 " Plug 'dense-analysis/ale'
 call plug#end()
 
 syntax on
 set number relativenumber
 set nu rnu
+set colorcolumn=100
 
 let g:python3_host_prog='/usr/local/bin/python3'
+
+" => Fast editing and reloading of vimrc configs
+autocmd! bufwritepost ~/.vimrc source ~/.vimrc
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -112,6 +120,12 @@ set tm=500
 " Add a bit extra margin to the left
 set foldcolumn=1
 
+" Disable scrollbars (real hackers don't use scrollbars for navigation!)
+set guioptions-=r
+set guioptions-=R
+set guioptions-=l
+set guioptions-=L
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -129,6 +143,7 @@ catch
 endtry
 
 set background=dark
+hi Normal ctermbg=NONE
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -189,17 +204,29 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 " => Moving around, tabs, windows and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-map <space> /
-map <C-space> ?
+" map <space> /
+" map <C-space> ?
+
+set splitbelow splitright
 
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
 
 " Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+map <Tab>j <C-W>j
+map <Tab>k <C-W>k
+map <Tab>h <C-W>h
+map <Tab>l <C-W>l
+
+" Change 2 split windows from vert to horiz or horiz to vert
+map <Leader>th <C-w>t<C-w>H
+map <Leader>tk <C-w>t<C-w>K
+
+" Make adjusing split sizes a bit more friendly
+noremap <silent> <S-Left> :vertical resize +3<CR>
+noremap <silent> <S-Right> :vertical resize -3<CR>
+noremap <silent> <S-Up> :resize +3<CR>
+noremap <silent> <S-Down> :resize -3<CR>
 
 " Close the current buffer
 map <leader>bd :Bclose<cr>:tabclose<cr>gT
@@ -257,15 +284,9 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 " Remap VIM 0 to first non-blank character
 map 0 ^
 
-" Move a line of text using ALT+[jk] or Command+[jk] on mac
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-
 if has("mac") || has("macunix")
-  nmap <D-j> <M-j>
   nmap <D-k> <M-k>
+  nmap <D-j> <M-j>
   vmap <D-j> <M-j>
   vmap <D-k> <M-k>
 endif
@@ -355,6 +376,7 @@ endfunction
 
 " Telescope Config
 nnoremap <C-p> <cmd>Telescope find_files<cr>
+nnoremap <C-g> <cmd>Telescope git_files<cr>
 nnoremap <C-f> <cmd>Telescope live_grep<cr>
 nnoremap <leader>b <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
@@ -411,9 +433,6 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
 
-" Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
-
 nnoremap ,c :call NERDComment(0,"toggle")<CR>
 vnoremap ,c :call NERDComment(0,"toggle")<CR>
 
@@ -436,7 +455,15 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vim Move
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:move_key_modifier = 'S'    
+let g:move_key_modifier = 'C'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-floaterm 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" config
+let g:floaterm_keymap_new    = '<leader>jn'    
+let g:floaterm_keymap_toggle = '<leader>j'
+let g:floaterm_keymap_kill   = '<leader>k'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Ale (syntax checker and linter)
