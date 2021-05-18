@@ -1,13 +1,15 @@
 call plug#begin()
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'dense-analysis/ale'
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/nvim-compe'
+Plug 'nvim-lua/completion-nvim'
 Plug 'itchyny/lightline.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'gruvbox-community/gruvbox'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'psf/black', { 'branch': 'stable' }
-Plug 'tpope/vim-commentary',
+Plug 'tpope/vim-commentary'
 Plug 'preservim/nerdtree'
 Plug 'jiangmiao/auto-pairs'
 Plug 'matze/vim-move'
@@ -369,6 +371,34 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin Configs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" LSP config (the mappings used in the default file don't quite work right)
+nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+
+" auto-format
+" autocmd BufWritePre *.js lua vim.lsp.buf.formatting_sync(nil, 100)
+" autocmd BufWritePre *.jsx lua vim.lsp.buf.formatting_sync(nil, 100)
+" autocmd BufWritePre *.py lua vim.lsp.buf.formatting_sync(nil, 100)
+
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing message extra message when using completion
+set shortmess+=c
+
+let g:completion_enable_auto_popup = 0
+imap <tab> <Plug>(completion_smart_tab)
+imap <s-tab> <Plug>(completion_smart_s_tab)
 
 " Telescope Config
 nnoremap <C-p> <cmd>Telescope find_files<cr>
@@ -423,71 +453,43 @@ autocmd BufWinEnter * silent NERDTreeMirror
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => NerdComment
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Add spaces after comment delimiters by default
-" let g:NERDSpaceDelims = 1
-
-" nnoremap ,c :call NERDComment(0,"toggle")<CR>
-" vnoremap ,c :call NERDComment(0,"toggle")<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => COC
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" use <tab> for trigger completion and navigate to the next complete item
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
-
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vim Move
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:move_key_modifier = 'C'
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vim-floaterm 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" config
-let g:floaterm_keymap_new    = '<leader>jn'    
-let g:floaterm_keymap_toggle = '<leader>j'
-let g:floaterm_keymap_kill   = '<leader>k'
+inoremap <silent><expr> <CR>      compe#confirm('<CR>')
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Ale (syntax checker and linter)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" let g:ale_linters = {
-" \   'javascript': [],
-" \   'python': [],
-" \   'go': []
-" \}
+" I don't use ale for linting (native LSP for that stuff)
+let g:ale_linters = {
+\   'javascript': [],
+\   'python': [],
+\   'go': []
+\}
 
-" let g:ale_fixers = {
-" \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-" \   'python': ['black', 'isort'],
-" \   'javascript': ['prettier'],
-" \   'css': ['prettier'],
-" \}
+" these are for formatting
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'python': ['black', 'isort'],
+\   'javascript': ['prettier'],
+\   'css': ['prettier'],
+\}
 
-" nmap <silent> <leader>a <Plug>(ale_next_wrap)
+nmap <silent> <leader>a <Plug>(ale_next_wrap)
 
-" " Disabling highlighting
-" let g:ale_set_highlights = 0
+" Disabling highlighting
+let g:ale_set_highlights = 0
+" autocompletion is done with nvim-compe
+let g:ale_completion_enabled = 0
 
-" " Only run linting when saving the file
-" let g:ale_lint_on_text_changed = 'never'
+" Only run linting when saving the file
+let g:ale_lint_on_text_changed = 'never'
 
-" let g:ale_lint_on_enter = 0
-" let g:ale_linters_explicit = 1
-" let g:ale_fix_on_save = 1
+let g:ale_lint_on_enter = 0
+let g:ale_linters_explicit = 1
+let g:ale_fix_on_save = 1
 
-" let g:ale_javascript_prettier_options = '--single-quote --trailing-comma none --tab-width 2'
+let g:ale_javascript_prettier_options = '--single-quote --trailing-comma none --tab-width 2'
 
