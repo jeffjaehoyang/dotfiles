@@ -99,20 +99,23 @@ code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
 alias ipython="iPython"
 alias subletsnu="cd /Users/jeffyang/Developer/sublets-nu-new"
 alias myworkspace="cd /Users/jeffyang/Developer"
-alias thisquarter="cd /Users/jeffyang/Dropbox/Northwestern\ University/Academics/4\ Senior/1\ 2021\ Spring"
-alias ml="cd /Users/jeffyang/Dropbox/Northwestern\ University/Academics/4\ Senior/1\ 2021\ Spring/CS\ 349"
-alias agile="cd /Users/jeffyang/Dropbox/Northwestern\ University/Academics/4\ Senior/1\ 2021\ Spring/CS\ 394"
-alias swc="cd /Users/jeffyang/Dropbox/Northwestern\ University/Academics/4\ Senior/1\ 2021\ Spring/CS\ 393/assignments"
+alias thisquarter="cd /Users/jeffyang/Dropbox/Northwestern\ University/Academics/4\ Senior/3\ 2022\ Winter"
 alias runpytest="python -m pytest -s"
 alias home="cd /Users/jeffyang"
+alias vimconfig="cd ~/.config/nvim"
 alias sourcezsh="source ~/.zshrc"
 alias sourcevenv="source venv/bin/activate"
 alias sourcevim="source ~/.vimrc"
 alias lc="leetcode"
 alias vim="nvim"
 alias c="clear"
+alias ri="npx react-native run-ios"
+alias pi="npx pod-install ios"
+alias zshcustom="vim /Users/jeffyang/.oh-my-zsh/custom/my_patches.zsh"
 
+export TERM="xterm-256color"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+export PGDATABASE=postgres

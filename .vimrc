@@ -15,7 +15,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'matze/vim-move'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'tpope/vim-fugitive'
-Plug 'Yggdroot/indentLine'
 call plug#end()
 
 syntax on
@@ -37,6 +36,11 @@ set history=500
 " Enable filetype plugins
 filetype plugin on
 filetype indent on
+
+autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
+autocmd FileType typescript setlocal shiftwidth=2 tabstop=2
+autocmd FileType html       setlocal shiftwidth=2 tabstop=2
+autocmd FileType python     setlocal shiftwidth=4 softtabstop=4 expandtab
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -265,6 +269,9 @@ endtry
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
+" markdown line wrap
+au BufRead,BufNewFile *.md setlocal textwidth=80
+
 
 """"""""""""""""""""""""""""""
 " => Status line
@@ -438,7 +445,7 @@ let g:gitgutter_enabled=0
 nnoremap <silent> <leader>d :GitGutterToggle<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => NerdTree 
+" => NerdTree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:NERDTreeWinPos = "right"
 let NERDTreeShowHidden=0
@@ -492,4 +499,3 @@ let g:ale_linters_explicit = 1
 let g:ale_fix_on_save = 1
 
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma none --tab-width 2'
-
