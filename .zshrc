@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -97,10 +104,8 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
 alias ipython="iPython"
-alias subletsnu="cd /Users/jeffyang/Developer/sublets-nu-new"
 alias myworkspace="cd /Users/jeffyang/Developer"
 alias thisquarter="cd /Users/jeffyang/Dropbox/Northwestern\ University/Academics/4\ Senior/3\ 2022\ Winter"
-alias runpytest="python -m pytest -s"
 alias home="cd /Users/jeffyang"
 alias vimconfig="cd ~/.config/nvim"
 alias sourcezsh="source ~/.zshrc"
@@ -108,6 +113,7 @@ alias sourcevenv="source venv/bin/activate"
 alias sourcevim="source ~/.vimrc"
 alias lc="leetcode"
 alias vim="nvim"
+alias v="nvim"
 alias c="clear"
 alias ri="npx react-native run-ios"
 alias pi="npx pod-install ios"
@@ -119,3 +125,12 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 export PGDATABASE=postgres
+
+alias luamake=/Users/jeffyang/.config/nvim/lua-language-server/3rd/luamake/luamake
+
+# powerlevel 10k
+# source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+#source ~/powerlevel10k/powerlevel10k.zsh-theme
